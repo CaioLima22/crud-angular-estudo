@@ -1,5 +1,7 @@
+import { GamesService } from './../services/games.service';
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../model/game';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-games',
@@ -8,15 +10,12 @@ import { Game } from '../model/game';
 })
 export class GamesComponent implements OnInit {
 
-  games: Game[] = [
-    {id: 1, name: 'Dark Souls Ramaster', avaliation: 10, difficulty: 'hard'},
-    {id: 2, name: 'Elden Ring', avaliation: 10, difficulty: 'medium'},
-    {id: 3, name: 'Bioshock Infinite', avaliation: 8, difficulty: 'medium'},
-    {id: 4, name: 'Far Cry 3', avaliation: 8, difficulty: 'medium'}
-  ]
+  games: Observable<Game[]>;
   displayedColumns = ['name', 'avaliation', 'difficulty'];
 
-  constructor() { }
+  constructor(private gamesService: GamesService ) {
+    this.games = this.gamesService.list();
+   }
 
   ngOnInit(): void {
   }
